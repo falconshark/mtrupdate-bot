@@ -1,0 +1,13 @@
+{
+  "name": "mtrupdate-bot",
+  "description": "A telegram bot for receive news from @mtrupdate twitter.",
+  "version": "0.0.1",
+  "author": "Mr.Twister<sardo.ip@sardo.work>",
+  "dependencies": {
+    "log4js":"0.6.21",
+    "nconf":"0.7.2",
+    "twitter":"1.2.5",
+    "node-telegram-bot-api":"0.15.0",
+    "mongodb":"2.0.47"
+  }
+}
