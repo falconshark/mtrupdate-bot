@@ -24,6 +24,8 @@ bot.onText('/register', function(msg, match) {
 
 	var userId = msg.from.id;
 
-	updateUserList(dyDb, userId);
+	updateUserList(dyDb, userId, function(err, result){
 
+
+	});
 }
