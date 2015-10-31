@@ -16,10 +16,12 @@ var awsSecretAccessKey = nconf.get('database')['aws'].secret_access_key;
 
 aws.config.update{accessKeyId: awsAccessKeyId, secretAccessKey: awsSecretAccessKey, region: 'ap-southeast-1'};
 
-
+var dyDb = new aws.DynamoDB();
 
 bot.onText('/register', function(msg, match) {
 
-	var msgId = msg.from.id;
+	var userId = msg.from.id;
+
+	updateUserList(dyDb, userId);
 
 }
