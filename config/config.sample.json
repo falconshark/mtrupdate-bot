@@ -5,6 +5,9 @@
 		"access_token_key":"Your twitter access token key",
 		"access_token_secret":"Your twitter access token secret"
 	},
+	"telegram":{
+		"bot_token":"Your telegram bot token"
+	},
 	"database":{
 		"aws":{
 			"access_key_id":"Your aws access key id",
