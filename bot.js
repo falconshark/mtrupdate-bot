@@ -15,3 +15,11 @@ var awsAccessKeyId = nconf.get('database')['aws'].access_key_id;
 var awsSecretAccessKey = nconf.get('database')['aws'].secret_access_key;
 
 aws.config.update{accessKeyId: awsAccessKeyId, secretAccessKey: awsSecretAccessKey, region: 'ap-southeast-1'};
+
+
+
+bot.onText('/register', function(msg, match) {
+
+	var msgId = msg.from.id;
+
+}
