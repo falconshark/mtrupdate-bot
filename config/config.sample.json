@@ -1,0 +1,14 @@
+{
+	"twitter":{
+		"consumer_key":"Your twitter consumer key",
+		"consumer_secret":"Your twitter consumer secret",
+		"access_token_key":"Your twitter access token key",
+		"access_token_secret":"Your twitter access token secret"
+	},
+	"database":{
+		"aws":{
+			"access_key_id":"Your aws access key id",
+			"secret_access_key":"Your aws secret key"
+		}
+	}
+}
