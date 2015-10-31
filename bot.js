@@ -6,6 +6,8 @@ var log4js = require('log4js');
 
 nconf.file('config', __dirname + '/config/config.json');
 
+var logger = log4js.getLogger('BOT-LOG');
+
 var botToken = nconf.get('telegram').bot_token;
 var bot = new TelegramBot(botToken, {
 	polling: true
