@@ -16,7 +16,7 @@ var bot = new telegramBot(botToken, {
 
 var twitterConsumerKey = nconf.get('twitter').consumer_key;
 var twitterConsumerSecret = nconf.get('twitter').consumer_key;
-var twitterAccessToken = nconf.get('twitter').consumer_secret;
+var twitterAccessToken = nconf.get('twitter').access_token_key;
 var twitterAccessTokenSecret = nconf.get('twitter').access_token_secret;
 
 var twitterClient = new twitter({
@@ -38,6 +38,10 @@ aws.config.update({
 });
 
 var dyDB = new aws.DynamoDB();
+
+twitterClient.get('search/tweets', {q: 'node.js'}, function(error, tweets, response){
+   console.log(tweets);
+});
 
 bot.on('message', function(msg) {
 
