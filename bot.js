@@ -16,11 +16,12 @@ var bot = new telegramBot(botToken, {
 
 var awsAccessKeyId = nconf.get('database')['dynamo'].access_key_id;
 var awsSecretAccessKey = nconf.get('database')['dynamo'].secret_access_key;
+var awsRegion = nconf.get('database')['dynamo'].region;
 
 aws.config.update({
 	accessKeyId: awsAccessKeyId,
 	secretAccessKey: awsSecretAccessKey,
-	region: 'ap-southeast-1'
+	region: awsRegion
 });
 
 var dyDb = new aws.DynamoDB();
