@@ -16,14 +16,15 @@ var bot = new telegramBot(botToken, {
 
 var twitterConsumerKey = nconf.get('twitter').consumer_key;
 var twitterConsumerSecret = nconf.get('twitter').consumer_key;
-var twitterAccessToken = nconf.get('twitter').access_token_key;
+var twitterAccessToken = nconf.get('twitter').consumer_secret;
 var twitterAccessTokenSecret = nconf.get('twitter').access_token_secret;
 
 var twitterClient = new twitter({
 	consumer_key: twitterConsumerKey,
 	consumer_secret: twitterConsumerSecret,
- 	access_token_key: twitterAccessToken,
-	access_token_secret: twitterAccessTokenSecret});
+	access_token_key: twitterAccessToken,
+	access_token_secret: twitterAccessTokenSecret
+});
 
 var awsAccessKeyId = nconf.get('database')['dynamo'].access_key_id;
 var awsSecretAccessKey = nconf.get('database')['dynamo'].secret_access_key;
@@ -46,7 +47,7 @@ bot.on('message', function(msg) {
 
 		database.updateUserList(dyDB, dyDBTable, userId, function(err, result) {
 
-			if(err){
+			if (err) {
 				logger.error(err);
 				return;
 			}
