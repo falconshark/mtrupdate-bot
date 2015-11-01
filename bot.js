@@ -14,8 +14,8 @@ var bot = new telegramBot(botToken, {
 	polling: true
 });
 
-var awsAccessKeyId = nconf.get('database')['aws'].access_key_id;
-var awsSecretAccessKey = nconf.get('database')['aws'].secret_access_key;
+var awsAccessKeyId = nconf.get('database')['dynamo'].access_key_id;
+var awsSecretAccessKey = nconf.get('database')['dynamo'].secret_access_key;
 
 aws.config.update({
 	accessKeyId: awsAccessKeyId,
