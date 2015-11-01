@@ -14,6 +14,17 @@ var bot = new telegramBot(botToken, {
 	polling: true
 });
 
+var twitterConsumerKey = nconf.get('twitter').consumer_key;
+var twitterConsumerSecret = nconf.get('twitter').consumer_key;
+var twitterAccessToken = nconf.get('twitter').access_token_key;
+var twitterAccessTokenSecret = nconf.get('twitter').access_token_secret;
+
+var twitterClient = new twitter({
+	consumer_key: twitterConsumerKey,
+	consumer_secret: twitterConsumerSecret,
+ 	twitterAccessToken: twitterAccessToken,
+	twitterAccessTokenSecret});
+
 var awsAccessKeyId = nconf.get('database')['dynamo'].access_key_id;
 var awsSecretAccessKey = nconf.get('database')['dynamo'].secret_access_key;
 var dyDBRegion = nconf.get('database')['dynamo'].region;
