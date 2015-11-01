@@ -12,7 +12,7 @@
 		"dynamo":{
 			"access_key_id":"Your aws access key id",
 			"secret_access_key":"Your aws secret key",
-			"tables":"mtrbot_users"
+			"table":"mtrbot_users"
 		}
 	}
 }
