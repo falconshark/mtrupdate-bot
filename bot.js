@@ -16,7 +16,8 @@ var bot = new telegramBot(botToken, {
 
 var awsAccessKeyId = nconf.get('database')['dynamo'].access_key_id;
 var awsSecretAccessKey = nconf.get('database')['dynamo'].secret_access_key;
-var awsRegion = nconf.get('database')['dynamo'].region;
+var dyDBRegion = nconf.get('database')['dynamo'].region;
+var dyDBTable = nconf.get('database')['dynamo'].table;
 
 aws.config.update({
 	accessKeyId: awsAccessKeyId,
@@ -24,7 +25,7 @@ aws.config.update({
 	region: awsRegion
 });
 
-var dyDb = new aws.DynamoDB();
+var dyDB = new aws.DynamoDB();
 
 bot.on('message', function(msg) {
 
@@ -32,7 +33,7 @@ bot.on('message', function(msg) {
 
 		var userId = msg.chat.id;
 
-		database.updateUserList(dyDb, userId, function(err, result) {
+		database.updateUserList(dyDB, dyDBTable, userId, function(err, result) {
 
 		});
 	}
