@@ -9,9 +9,10 @@
 		"bot_token":"Your telegram bot token"
 	},
 	"database":{
-		"aws":{
+		"dynamo":{
 			"access_key_id":"Your aws access key id",
-			"secret_access_key":"Your aws secret key"
+			"secret_access_key":"Your aws secret key",
+			"tables":"mtrbot_users"
 		}
 	}
 }
