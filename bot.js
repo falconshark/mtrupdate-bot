@@ -15,7 +15,7 @@ var bot = new telegramBot(botToken, {
 });
 
 var twitterConsumerKey = nconf.get('twitter').consumer_key;
-var twitterConsumerSecret = nconf.get('twitter').consumer_key;
+var twitterConsumerSecret = nconf.get('twitter').consumer_secret;
 var twitterAccessToken = nconf.get('twitter').access_token_key;
 var twitterAccessTokenSecret = nconf.get('twitter').access_token_secret;
 
