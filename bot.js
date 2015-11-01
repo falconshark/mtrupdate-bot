@@ -22,7 +22,7 @@ var dyDBTable = nconf.get('database')['dynamo'].table;
 aws.config.update({
 	accessKeyId: awsAccessKeyId,
 	secretAccessKey: awsSecretAccessKey,
-	region: awsRegion
+	region: dyDBRegion
 });
 
 var dyDB = new aws.DynamoDB();
@@ -35,6 +35,12 @@ bot.on('message', function(msg) {
 
 		database.updateUserList(dyDB, dyDBTable, userId, function(err, result) {
 
+			if(err){
+				logger.error(err);
+				return;
+			}
+
+			logger.debug('Added new user: ', result.userId);
 		});
 	}
 });
