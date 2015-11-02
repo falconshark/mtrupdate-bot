@@ -46,6 +46,23 @@ twitterClient.stream('user', function(stream){
 	 if(tweet.text !== undefined){
 		 logger.info('Detected new tweet :' + tweet.text);
 		 logger.info('Sending it to telegram.....');
+
+		 database.getUserList(dyDB, dyDBTable, function(err, result){
+
+			 if(err){
+				 logger.error(err);
+				 return;
+			 }
+
+			 for(var i = 0; i < result.Items.length; i++){
+
+				 var userId = result.Items[i].user_id['S'];
+
+				 bot.sendMessage(userId, tweet.text);
+
+				 logger.info('Message sent to user: ' + userId);
+			 }
+		 });
 	 }
   });
 
