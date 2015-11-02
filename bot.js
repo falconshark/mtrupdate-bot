@@ -39,8 +39,21 @@ aws.config.update({
 
 var dyDB = new aws.DynamoDB();
 
-twitterClient.get('search/tweets', {q: 'node.js'}, function(error, tweets, response){
-   console.log(tweets);
+logger.info('Mrtupdate Bot started.');
+
+twitterClient.stream('user', function(stream){
+  stream.on('data', function(tweet) {
+	 if(tweet.text !== undefined){
+		 logger.info('Detected new tweet :' + tweet.text);
+		 logger.info('Sending it to telegram.....');
+	 }
+  });
+
+  stream.on('error', function(err) {
+    if(err){
+		logger.error(err);
+	}
+  });
 });
 
 bot.on('message', function(msg) {
