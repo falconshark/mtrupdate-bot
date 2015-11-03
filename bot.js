@@ -41,11 +41,18 @@ var dyDB = new aws.DynamoDB();
 
 logger.info('Mrtupdate Bot started.');
 
+//Steam user's own stream with user: mtrupdate
+
 twitterClient.stream('user', {with: mtrupdate}, function(stream){
   stream.on('data', function(tweet) {
+
+	  //If get tweet successed and the text of tweet existed, using telegram bot to send message
+
 	 if(tweet.text !== undefined){
 		 logger.info('Detected new tweet :' + tweet.text);
 		 logger.info('Sending it to telegram.....');
+
+		 //Find user list from database
 
 		 database.getUserList(dyDB, dyDBTable, function(err, result){
 
@@ -53,6 +60,8 @@ twitterClient.stream('user', {with: mtrupdate}, function(stream){
 				 logger.error(err);
 				 return;
 			 }
+
+			 //Send message with telegram bot by user list
 
 			 for(var i = 0; i < result.Items.length; i++){
 
@@ -74,6 +83,8 @@ twitterClient.stream('user', {with: mtrupdate}, function(stream){
 });
 
 bot.on('message', function(msg) {
+
+	//If received /register command, get the chat id and update it to database
 
 	if (msg.text === '/register') {
 
