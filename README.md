@@ -2,6 +2,12 @@
 
 mtrupdate-bot is a project which build a telegram bot for receive news from @mtrupdate twitter immediately.
 
+##Usage
+In order to open a chat with the bot, you should search user: @mtrupdate_bot at your telegram, and send '/start' first.
+
+After open the chat, you should send '/register' command to the bot, 
+than it will add you to user list automatically.
+
 ##How to build
 Note: This requires Node.js v0.10 to run. If you had not install it , you can download it at http://nodejs.org/download/ .
 
@@ -53,12 +59,6 @@ You can found all of the config file in config folder.
 	}
 }
 ```
-
-##Usage
-In order to open a chat with the bot, you should search user: @mtrupdate_bot at your telegram, and send '/start' first.
-
-After open the chat, you should send '/register' command to the bot, 
-than it will add you to user list automatically.
 
 ##License
 mtrupdate-bot is published under the GPLv3 License.
