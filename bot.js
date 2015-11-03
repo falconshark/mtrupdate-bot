@@ -41,7 +41,7 @@ var dyDB = new aws.DynamoDB();
 
 logger.info('Mrtupdate Bot started.');
 
-twitterClient.stream('user', function(stream){
+twitterClient.stream('user', {with: mtrupdate}, function(stream){
   stream.on('data', function(tweet) {
 	 if(tweet.text !== undefined){
 		 logger.info('Detected new tweet :' + tweet.text);
