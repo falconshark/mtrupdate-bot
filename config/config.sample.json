@@ -8,11 +8,14 @@
 	"telegram":{
 		"bot_token":"Your telegram bot token"
 	},
-	"database":{
-		"dynamo":{
-			"access_key_id":"Your aws access key id",
-			"secret_access_key":"Your aws secret key",
-			"table":"mtrbot_users"
-		}
+
+	"database":"sqlite",
+	"dynamo":{
+		"access_key_id":"Your aws access key id",
+		"secret_access_key":"Your aws secret key",
+		"table":"mtrbot_users"
+	},
+	"sqlite":{
+		"database_path":"./mtrbot.base.rdb"
 	}
 }
