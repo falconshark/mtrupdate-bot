@@ -66,7 +66,7 @@ twitterClient.stream('user', {
 
 			//Find user list from database
 
-			database.getUserList(dyDB, dyDBTable, _getUserFromDyDB);
+			dynamo.getUserList(dyDB, dyDBTable, _getUserFromDyDB);
 		}
 	});
 
