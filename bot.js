@@ -3,9 +3,32 @@ var twitter = require('twitter');
 var aws = require('aws-sdk');
 var nconf = require('nconf');
 var log4js = require('log4js');
-var database = require(__dirname + '/lib/database');
+
+var database = nconf.get('database');
 
 nconf.file('config', __dirname + '/config/config.json');
+
+if (database === 'dynamo') {
+
+	var dynamo = require(__dirname + '/lib/dynamo');
+
+	var awsAccessKeyId = nconf.get('database')['dynamo'].access_key_id;
+	var awsSecretAccessKey = nconf.get('database')['dynamo'].secret_access_key;
+	var dyDBRegion = nconf.get('database')['dynamo'].region;
+	var dyDBTable = nconf.get('database')['dynamo'].table;
+
+	aws.config.update({
+		accessKeyId: awsAccessKeyId,
+		secretAccessKey: awsSecretAccessKey,
+		region: dyDBRegion
+	});
+
+	var dyDB = new aws.DynamoDB();	
+
+} else {
+
+	var sqlite = require(__dirname + '/lib/sqlite');
+}
 
 var logger = log4js.getLogger('BOT-LOG');
 
@@ -26,60 +49,49 @@ var twitterClient = new twitter({
 	access_token_secret: twitterAccessTokenSecret
 });
 
-var awsAccessKeyId = nconf.get('database')['dynamo'].access_key_id;
-var awsSecretAccessKey = nconf.get('database')['dynamo'].secret_access_key;
-var dyDBRegion = nconf.get('database')['dynamo'].region;
-var dyDBTable = nconf.get('database')['dynamo'].table;
-
-aws.config.update({
-	accessKeyId: awsAccessKeyId,
-	secretAccessKey: awsSecretAccessKey,
-	region: dyDBRegion
-});
-
-var dyDB = new aws.DynamoDB();
-
 logger.info('Mrtupdate Bot started.');
 
 //Steam user's own stream with user: mtrupdate
 
-twitterClient.stream('user', {with: mtrupdate}, function(stream){
-  stream.on('data', function(tweet) {
+twitterClient.stream('user', {
+	with: mtrupdate
+}, function(stream) {
+	stream.on('data', function(tweet) {
 
-	  //If get tweet successed and the text of tweet existed, using telegram bot to send message
+		//If get tweet successed and the text of tweet existed, using telegram bot to send message
 
-	 if(tweet.text !== undefined){
-		 logger.info('Detected new tweet :' + tweet.text);
-		 logger.info('Sending it to telegram.....');
+		if (tweet.text !== undefined) {
+			logger.info('Detected new tweet :' + tweet.text);
+			logger.info('Sending it to telegram.....');
 
-		 //Find user list from database
+			//Find user list from database
 
-		 database.getUserList(dyDB, dyDBTable, function(err, result){
+			database.getUserList(dyDB, dyDBTable, function(err, result) {
 
-			 if(err){
-				 logger.error(err);
-				 return;
-			 }
+				if (err) {
+					logger.error(err);
+					return;
+				}
 
-			 //Send message with telegram bot by user list
+				//Send message with telegram bot by user list
 
-			 for(var i = 0; i < result.Items.length; i++){
+				for (var i = 0; i < result.Items.length; i++) {
 
-				 var userId = result.Items[i].user_id['S'];
+					var userId = result.Items[i].user_id['S'];
 
-				 bot.sendMessage(userId, tweet.text);
+					bot.sendMessage(userId, tweet.text);
 
-				 logger.info('Message sent to user: ' + userId);
-			 }
-		 });
-	 }
-  });
+					logger.info('Message sent to user: ' + userId);
+				}
+			});
+		}
+	});
 
-  stream.on('error', function(err) {
-    if(err){
-		logger.error(err);
-	}
-  });
+	stream.on('error', function(err) {
+		if (err) {
+			logger.error(err);
+		}
+	});
 });
 
 bot.on('message', function(msg) {
