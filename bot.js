@@ -23,7 +23,7 @@ if (database === 'dynamo') {
 		region: dyDBRegion
 	});
 
-	var dyDB = new aws.DynamoDB();	
+	var dyDB = new aws.DynamoDB();
 
 } else {
 
@@ -66,24 +66,7 @@ twitterClient.stream('user', {
 
 			//Find user list from database
 
-			database.getUserList(dyDB, dyDBTable, function(err, result) {
-
-				if (err) {
-					logger.error(err);
-					return;
-				}
-
-				//Send message with telegram bot by user list
-
-				for (var i = 0; i < result.Items.length; i++) {
-
-					var userId = result.Items[i].user_id['S'];
-
-					bot.sendMessage(userId, tweet.text);
-
-					logger.info('Message sent to user: ' + userId);
-				}
-			});
+			database.getUserList(dyDB, dyDBTable, _getUserFromDyDB);
 		}
 	});
 
@@ -92,6 +75,25 @@ twitterClient.stream('user', {
 			logger.error(err);
 		}
 	});
+});
+
+function _getUserFromDyDB(err, result) {
+
+	if (err) {
+		logger.error(err);
+		return;
+	}
+
+	//Send message with telegram bot by user list
+
+	for (var i = 0; i < result.Items.length; i++) {
+
+		var userId = result.Items[i].user_id['S'];
+
+		bot.sendMessage(userId, tweet.text);
+
+		logger.info('Message sent to user: ' + userId);
+	}
 });
 
 bot.on('message', function(msg) {
