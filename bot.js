@@ -3,6 +3,7 @@ var twitter = require('twitter');
 var aws = require('aws-sdk');
 var nconf = require('nconf');
 var log4js = require('log4js');
+var sqlite = require('sqlite3').verbose();
 
 var database = nconf.get('database');
 
@@ -26,8 +27,9 @@ if (database === 'dynamo') {
 	var dyDB = new aws.DynamoDB();
 
 } else {
-
 	var sqlite = require(__dirname + '/lib/sqlite');
+	var database_path = nconf.get('database')['sqlite'].database_path;
+	var db = new sqlite3.Database(database_path);
 }
 
 var logger = log4js.getLogger('BOT-LOG');
